@@ -32,14 +32,14 @@ function App() {
         <Routes>
           {/* Public Routes with Main Layout (Header + Footer) */}
           <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/results" element={<Results />} />
           </Route>
 
-          {/* Auth Route (no header/footer) */}
+          {/* Login Route – PublicRoute redirects to /dashboard if already logged in */}
           <Route
             path="/login"
             element={
@@ -65,8 +65,8 @@ function App() {
           {/* 404 Not Found Page */}
           <Route path="/404" element={<NotFound />} />
 
-          {/* Redirect old /home to root */}
-          <Route path="/login" element={<Navigate to="/" replace />} />
+          {/* Root – redirect to /login (PublicRoute handles authenticated redirect) */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
 
           {/* Catch all unknown routes – redirect to 404 */}
           <Route path="*" element={<Navigate to="/404" replace />} />
