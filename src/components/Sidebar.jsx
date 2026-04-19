@@ -60,12 +60,12 @@ const Sidebar = ({ user, studentData, onSignOut, isOpen, onClose }) => {
         {/* Collapse toggle button (desktop only) */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden md:flex absolute -right-3 top-20 w-6 h-6 bg-white border border-[#E5E5E5] rounded-full items-center justify-center text-[#555555] hover:text-[#E2592D] shadow-sm z-10"
+          className="hidden md:flex absolute -right-3 top-6 w-6 h-6 bg-white border border-[#E5E5E5] rounded-full items-center justify-center text-[#555555] hover:text-[#E2592D] shadow-sm z-10"
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
 
-        {/* Profile Section */}
+        {/* Profile Section with Sign Out */}
         <div className={`p-4 border-b border-[#E5E5E5] ${collapsed ? 'px-2' : ''}`}>
           <div className={`flex ${collapsed ? 'justify-center' : 'items-center gap-3'}`}>
             {profileImage ? (
@@ -101,9 +101,24 @@ const Sidebar = ({ user, studentData, onSignOut, isOpen, onClose }) => {
               </div>
             )}
           </div>
+
+          {/* Sign Out – directly below profile */}
+          <button
+            onClick={() => {
+              onSignOut();
+              onClose();
+            }}
+            className={`mt-3 flex items-center gap-3 w-full px-3 py-2 text-[#555555] hover:bg-[#FDE3DA] hover:text-[#E2592D] rounded-lg transition-colors ${
+              collapsed ? 'justify-center' : ''
+            }`}
+            title={collapsed ? 'Sign Out' : ''}
+          >
+            <LogOut size={18} />
+            {!collapsed && <span className="text-sm">Sign Out</span>}
+          </button>
         </div>
 
-        {/* Navigation - scrollable */}
+        {/* Navigation – takes remaining space */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -129,23 +144,6 @@ const Sidebar = ({ user, studentData, onSignOut, isOpen, onClose }) => {
             );
           })}
         </nav>
-
-        {/* Sign Out - fixed at bottom */}
-        <div className={`p-4 border-t border-[#E5E5E5] ${collapsed ? 'px-2' : ''}`}>
-          <button
-            onClick={() => {
-              onSignOut();
-              onClose();
-            }}
-            className={`flex items-center gap-3 w-full px-3 py-3 md:py-2 text-[#555555] hover:bg-[#FDE3DA] hover:text-[#E2592D] rounded-lg transition-colors ${
-              collapsed ? 'justify-center' : ''
-            }`}
-            title={collapsed ? 'Sign Out' : ''}
-          >
-            <LogOut size={20} />
-            {!collapsed && <span className="text-base md:text-sm">Sign Out</span>}
-          </button>
-        </div>
       </aside>
     </>
   );
