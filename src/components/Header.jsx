@@ -40,7 +40,7 @@ const Header = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Navigation items (public) – Home, About, Courses removed
+  // Navigation items (public)
   const navItems = [
     { name: 'Results', path: '/results' },
     { name: 'Contact', path: '/contact' },
@@ -55,7 +55,7 @@ const Header = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    navigate('/login');
   };
 
   // Display name for authenticated user
@@ -93,7 +93,7 @@ const Header = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0">
+            <Link to={isAuthenticated ? "/dashboard" : "/home"} className="flex-shrink-0">
               <img
                 src="/braincity_logo.png"
                 alt="BrainCity"
@@ -234,7 +234,7 @@ const Header = () => {
                 </div>
               )}
 
-              {/* Navigation Items – only Results and Contact */}
+              {/* Navigation Items */}
               {navItems.map((item) => (
                 <Link
                   key={item.name}
