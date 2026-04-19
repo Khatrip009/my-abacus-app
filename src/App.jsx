@@ -1,5 +1,5 @@
 // src/App.jsx
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './layouts/Layout';
 import DashboardLayout from './layouts/DashboardLayout';
@@ -12,6 +12,7 @@ import About from './pages/About';
 import Courses from './components/Courses';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 // Authenticated Pages
 import StudentDashboard from './pages/StudentDashboard';
@@ -20,7 +21,7 @@ import Results from './pages/Results';
 import Fees from './pages/Fees';
 import Profile from './pages/Profile';
 
-// Legacy worksheet routes (optional – kept for compatibility)
+// Legacy worksheet routes
 import OneDigitWorksheet from './pages/OneDigitWorksheet';
 import OneDigitNoFormulaWorksheet from './pages/OneDigitNoFormulaWorksheet';
 
@@ -35,7 +36,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/results" element={<Results />} /> {/* Public results view if needed */}
+            <Route path="/results" element={<Results />} />
           </Route>
 
           {/* Auth Route (no header/footer) */}
@@ -61,11 +62,14 @@ function App() {
             </Route>
           </Route>
 
-          {/* Redirect root to home */}
-          <Route path="/home" element={<Navigate to="/" replace />} />
+          {/* 404 Not Found Page */}
+          <Route path="/404" element={<NotFound />} />
 
-          {/* Catch all – redirect to home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* Redirect old /home to root */}
+          <Route path="/login" element={<Navigate to="/" replace />} />
+
+          {/* Catch all unknown routes – redirect to 404 */}
+          <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </AuthProvider>
     </Router>
